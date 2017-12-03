@@ -1,6 +1,4 @@
-use super::file;
-
-fn find_checksum(input: &str) -> u32 {
+pub fn find_checksum(input: &str) -> u32 {
   let lines = input.split("\n");
 
   lines.fold(0, |acc, line| {
@@ -21,6 +19,6 @@ fn find_sum_example_1() {
 
 #[test]
 fn find_sum_solution() {
-    let input = file::read_to_string("day2-1.txt");
+    let input = super::file::read_to_string("day2-1.txt");
     assert_eq!(36766, find_checksum(input.as_str().trim()));
 }

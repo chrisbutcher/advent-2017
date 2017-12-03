@@ -1,6 +1,4 @@
-use super::file;
-
-fn find_sum(input: &str) -> u32 {
+pub fn find_sum(input: &str) -> u32 {
     let input_length = input.len();
 
     let chars: Vec<_> = input.chars().map( |n| n.to_digit(10).unwrap() ).collect();
@@ -46,6 +44,6 @@ fn find_sum_example_5() {
 
 #[test]
 fn find_sum_solution() {
-    let input = file::read_to_string("day1-1.txt");
+    let input = super::file::read_to_string("day1-1.txt");
     assert_eq!(1220, find_sum(input.as_str().trim()));
 }
