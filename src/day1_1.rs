@@ -18,27 +18,27 @@ pub fn find_sum(input: &str) -> u32 {
 }
 
 #[test]
-fn find_sum_example_1() {
+fn example_1() {
     assert_eq!(6, find_sum("1212"));
 }
 
 #[test]
-fn find_sum_example_2() {
+fn example_2() {
     assert_eq!(0, find_sum("1221"));
 }
 
 #[test]
-fn find_sum_example_3() {
+fn example_3() {
     assert_eq!(4, find_sum("123425"));
 }
 
 #[test]
-fn find_sum_example_4() {
+fn example_4() {
     assert_eq!(12, find_sum("123123"));
 }
 
 #[test]
-fn find_sum_example_5() {
+fn example_5() {
     assert_eq!(4, find_sum("12131415"));
 }
 

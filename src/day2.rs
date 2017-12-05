@@ -12,7 +12,7 @@ pub fn find_checksum(input: &str) -> u32 {
 }
 
 #[test]
-fn find_sum_example_1() {
+fn example_1() {
     let input = "5 1 9 5\n7 5 3\n2 4 6 8";
     assert_eq!(18, find_checksum(input));
 }

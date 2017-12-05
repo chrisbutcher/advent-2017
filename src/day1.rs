@@ -17,22 +17,22 @@ pub fn find_sum(input: &str) -> u32 {
 }
 
 #[test]
-fn find_sum_example_1() {
+fn example_1() {
     assert_eq!(3, find_sum("1122"));
 }
 
 #[test]
-fn find_sum_example_2() {
+fn example_2() {
     assert_eq!(4, find_sum("1111"));
 }
 
 #[test]
-fn find_sum_example_3() {
+fn example_3() {
     assert_eq!(0, find_sum("1234"));
 }
 
 #[test]
-fn find_sum_example_4() {
+fn example_4() {
     assert_eq!(9, find_sum("91212129"));
 }
 
