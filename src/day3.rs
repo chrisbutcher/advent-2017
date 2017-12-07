@@ -17,61 +17,81 @@ pub fn find_steps_from(input: u32) -> u32 {
     }
   }
 
-  // Re-bind as immutable usize
-  let square_width = square_width as usize;
+  let square_width = square_width;
 
-  let mut vec = vec![vec![0; square_width]; square_width];
+  let mut target_tuple: (i32, i32) = (0, 0);
+  let mut done = false;
+
+  let mut grid = vec![vec![0; square_width as usize]; square_width as usize];
+  let mut current_direction = Direction::Left;
 
   let mut y = square_width - 1;
   let mut x = square_width - 1;
 
   let mut i = square_width.pow(2);
+  grid[y as usize][x as usize] = i;
 
-  vec[y][x] = i;
+  'a: for _ in 0..3 {
+    for _ in 0..(square_width - 1) {
+      let (next_y, next_x) = direction_to_tuple(y, x, &current_direction);
 
-  let current_direction = Direction::Left;
+      y = next_y;
+      x = next_x;
+      i -= 1;
+      grid[y as usize][x as usize] = i;
 
-  loop {
-    let (next_y, next_x) = direction_to_tuple(y, x, &current_direction);
-    let vec_clone = vec.clone();
-    let grid_value = vec_clone[next_y].get(next_x);
+      if i == input {
+        target_tuple = (y as i32, x as i32);
+        done = true;
+        break 'a;
+      }
 
-    // let change_direction = match grid_value {
-    //   Some(v) => {
-    //     // if *v == 0 {
-    //       false
-    //     // }
-    //   },
-    //   None => {
-    //     true
-    //   }
-    // };
-
-    // let current_direction = if change_direction {
-    //   direction_to_next_direction(&current_direction)
-    // } else {
-    //   i -= 1;
-    //   y = next_y;
-    //   x = next_x;
-    //   vec[y][x] = i;
-
-    //   direction_identify(&current_direction)
-    // };
+    }
+    current_direction = direction_to_next_direction(&current_direction);
   }
 
-  println!("{:?}", vec);
+  if !done {
+    'b: loop {
+      for _ in 0..(square_width - 1) {
+        let (next_y, next_x) = direction_to_tuple(y, x, &current_direction);
 
-  // TODO
-  0
-}
+        let grid_clone = grid.clone();
+        let allowed = match grid_clone[next_y as usize].get(next_x as usize) {
+          Some(n) => {
+            if *n == 0 {
+              true
+            } else {
+              false
+            }
+          }
+          _ => false
+        };
 
-fn direction_identify(direction: &Direction) -> Direction {
-  match *direction {
-    Direction::Right => Direction::Right,
-    Direction::Up => Direction::Up,
-    Direction::Left => Direction::Left,
-    Direction::Down => Direction::Down,
+        if allowed {
+          y = next_y;
+          x = next_x;
+          i -= 1;
+
+          grid[y as usize][x as usize] = i;
+
+          if i == input {
+            target_tuple = (y as i32, x as i32);
+            break 'b;
+          } else if i == 1 {
+            break 'b;
+          }
+        } else {
+          break;
+        }
+      }
+      current_direction = direction_to_next_direction(&current_direction);
+    }
   }
+
+  let center: (i32, i32) = (square_width as i32 / 2, square_width as i32 / 2);
+  let result = (target_tuple.0 - center.0).abs() + (target_tuple.1 - center.1).abs();
+
+  result as u32
 }
 
 fn direction_to_next_direction(direction: &Direction) -> Direction {
@@ -83,7 +103,7 @@ fn direction_to_next_direction(direction: &Direction) -> Direction {
   }
 }
 
-fn direction_to_tuple(y: usize, x: usize, direction: &Direction) -> (usize, usize) {
+fn direction_to_tuple(y: u32, x: u32, direction: &Direction) -> (u32, u32) {
   match *direction {
     Direction::Right => (y, x + 1),
     Direction::Up => (y - 1, x),
@@ -99,5 +119,5 @@ fn example_1() {
 
 #[test]
 fn find_solution() {
-  // assert_eq!(0, find_steps_from(265149));
+  assert_eq!(438, find_steps_from(265149));
 }

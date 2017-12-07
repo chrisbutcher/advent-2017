@@ -1,5 +1,5 @@
 pub fn find_sum_of_evenly_divisible(input: &str) -> u32 {
-  let lines = input.trim().split("\n");
+  let lines = input.split("\n");
 
   lines.fold(0, |acc, line| {
     let mut numbers: Vec<_> = line.split_whitespace().map( |n| n.parse::<u32>().unwrap() ).collect();
